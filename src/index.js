@@ -1,5 +1,6 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
+import SlimSelect from 'slim-select';
 
 const breedSelect = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
@@ -35,7 +36,7 @@ breedSelect.addEventListener('change', e => {
       console.error('Error fetching cat by breed:', error);
       loader.classList.add('hidden');
       Notiflix.Notify.failure(
-        'Failed to fetch cat information. Please try again later.'
+        'Oops! Something went wrong! Try reloading the page!'
       );
     });
 });
@@ -55,3 +56,8 @@ function renderCat(catData) {
   );
   loader.classList.add('hidden');
 }
+
+// new SlimSelect({
+//   select: '.breed-select',
+//   data: Cats,
+// });

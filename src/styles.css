@@ -5,14 +5,26 @@
 
 .h2 {
   text-align: center;
-  font-size: 2em;
+  font-family: Lato, sans-serif;
+  font-size: 6em;
   margin: 0;
   position: absolute;
 }
-
+.p {
+  color: rgb(17, 65, 107);
+}
+.header {
+  font-family: Lato, sans-serif;
+  font-weight: 100;
+  color: #a18a6e;
+  font-size: 10em;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  text-shadow: 5px 5px #6b5b49;
+}
 .background {
-  background: rgb(58, 173, 202);
-  max-width: 600px;
+  background-image: url('./img/v1051-30b.jpg');
+  width: 100%;
   margin: 50px auto;
   text-align: center;
 }
@@ -23,6 +35,10 @@
 
 .hidden {
   display: none;
+}
+
+img {
+  display: block;
 }
 
 .loader {
@@ -39,7 +55,7 @@
   position: absolute;
   inset: 0px;
   border-radius: 50%;
-  border: 5px solid #fff;
+  border: 5px solid #6b5b49;
   animation: prixClipFix 2s linear infinite;
 }
 .loader::after {
