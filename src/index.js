@@ -1,6 +1,7 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 
 const breedSelect = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
@@ -40,24 +41,50 @@ breedSelect.addEventListener('change', e => {
       );
     });
 });
-//   fetchCatByBreed(e.target.value).then(data => renderCat(data[0]));
 
 function renderCat(catData) {
   const { url } = catData;
   const { description, name, temperament } = catData.breeds[0];
-  catInfo.insertAdjacentHTML(
-    'beforeend',
-    `<div>
-        <h2>${name}</h2>
-        <img src="${url}" alt="${name}" />
-        <p>${description}</p>
-        <p><strong>Temperament:</strong> ${temperament}</p>
-    </div>`
-  );
+  const catContainer = document.createElement('div');
+  catContainer.classList.add('cat-container');
+  const catImage = document.createElement('img');
+  catImage.src = url;
+  catImage.alt = name;
+  catContainer.appendChild(catImage);
+  const catInfoContainer = document.createElement('div');
+  catInfoContainer.classList.add('cat-info-container');
+  const catName = document.createElement('h2');
+  catName.textContent = name;
+  const catTemperament = document.createElement('p');
+  catTemperament.innerHTML = `<strong>Temperament:</strong> ${temperament}`;
+  const catDescription = document.createElement('p');
+  catDescription.textContent = description;
+  catInfoContainer.appendChild(catName);
+  catInfoContainer.appendChild(catDescription);
+  catInfoContainer.appendChild(catTemperament);
+  catContainer.appendChild(catInfoContainer);
+  catInfo.appendChild(catContainer);
   loader.classList.add('hidden');
+  Notiflix.Loading.remove();
 }
 
+//   fetchCatByBreed(e.target.value).then(data => renderCat(data[0]));
+
+// function renderCat(catData) {
+//   const { url } = catData;
+//   const { description, name, temperament } = catData.breeds[0];
+//   catInfo.insertAdjacentHTML(
+//     'beforeend',
+//     `<div>
+//         <h2>${name}</h2>
+//         <img src="${url}" alt="${name}" />
+//         <p>${description}</p>
+//         <p><strong>Temperament:</strong> ${temperament}</p>
+//     </div>`
+//   );
+//   loader.classList.add('hidden');
+// }
+
 // new SlimSelect({
-//   select: '.breed-select',
-//   data: Cats,
+//   select: '#slim-select',
 // });
