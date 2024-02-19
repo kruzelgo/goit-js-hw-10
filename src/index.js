@@ -8,11 +8,26 @@ const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 const errorElement = document.querySelector('.error');
 
-try {
-  loader.classList.remove('hidden');
-  fetchBreeds().then(data => renderSelect(data));
-} catch (error) {
-  console.log(error);
+const cats = [];
+
+loader.classList.remove('hidden');
+
+fetchBreeds()
+  .then(breedsData => {
+    renderSelect(breedsData);
+    renderBreedsData(breedsData);
+    loader.classList.add('hidden');
+  })
+  .catch(error => {
+    console.error('Error fetching breeds:', error);
+    handleFetchError();
+  });
+
+async function handleFetchError() {
+  await Notiflix.Notify.failure(
+    'Oops! Something went wrong! Try reloading the page!'
+  );
+  loader.classList.add('hidden');
 }
 
 function renderSelect(breeds) {
@@ -22,7 +37,21 @@ function renderSelect(breeds) {
     })
     .join('');
   breedSelect.insertAdjacentHTML('beforeend', markup);
-  loader.classList.add('hidden');
+}
+
+function renderBreedsData(catBreeds) {
+  catBreeds.map(({ id, name }) => {
+    cats.push({ text: name, value: id });
+  });
+
+  new SlimSelect({
+    select: '#slim-select',
+    data: cats,
+  });
+
+  loader.classList.remove('hidden');
+  errorElement.classList.add('hidden');
+  console.log(catBreeds);
 }
 
 breedSelect.addEventListener('change', e => {
@@ -79,52 +108,3 @@ function renderCat(catData) {
   loader.classList.add('hidden');
   Notiflix.Loading.remove();
 }
-
-// function renderCat(catData) {
-//   const { url } = catData;
-//   const { description, name, temperament } = catData.breeds[0];
-//   const catContainer = document.createElement('div');
-//   catContainer.classList.add('cat-container');
-
-//   const catImage = document.createElement('img');
-//   catImage.classList.add('zoom-img');
-//   catImage.src = url;
-//   catImage.alt = name;
-//   catContainer.appendChild(catImage);
-//   const catInfoContainer = document.createElement('div');
-
-//   catInfoContainer.classList.add('cat-info-container');
-//   const catName = document.createElement('h2');
-//   catName.textContent = name;
-//   const catTemperament = document.createElement('p');
-//   catTemperament.innerHTML = `<strong>Temperament:</strong> ${temperament}`;
-//   const catDescription = document.createElement('p');
-//   catDescription.textContent = description;
-//   catInfoContainer.appendChild(catName);
-//   catInfoContainer.appendChild(catDescription);
-//   catInfoContainer.appendChild(catTemperament);
-//   catContainer.appendChild(catInfoContainer);
-//   catInfo.appendChild(catContainer);
-//   loader.classList.add('hidden');
-//   Notiflix.Loading.remove();
-// }
-//   fetchCatByBreed(e.target.value).then(data => renderCat(data[0]));
-
-// function renderCat(catData) {
-//   const { url } = catData;
-//   const { description, name, temperament } = catData.breeds[0];
-//   catInfo.insertAdjacentHTML(
-//     'beforeend',
-//     `<div>
-//         <h2>${name}</h2>
-//         <img src="${url}" alt="${name}" />
-//         <p>${description}</p>
-//         <p><strong>Temperament:</strong> ${temperament}</p>
-//     </div>`
-//   );
-//   loader.classList.add('hidden');
-// }
-
-// new SlimSelect({
-//   select: '#slim-select',
-// });
