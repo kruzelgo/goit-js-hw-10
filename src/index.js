@@ -47,11 +47,23 @@ function renderCat(catData) {
   const { description, name, temperament } = catData.breeds[0];
   const catContainer = document.createElement('div');
   catContainer.classList.add('cat-container');
+
   const catImage = document.createElement('img');
+  catImage.classList.add('zoom-img');
   catImage.src = url;
   catImage.alt = name;
+
+  catImage.addEventListener('mouseenter', function () {
+    catImage.classList.add('zoomed');
+  });
+
+  catImage.addEventListener('mouseleave', function () {
+    catImage.classList.remove('zoomed');
+  });
+
   catContainer.appendChild(catImage);
   const catInfoContainer = document.createElement('div');
+
   catInfoContainer.classList.add('cat-info-container');
   const catName = document.createElement('h2');
   catName.textContent = name;
@@ -68,6 +80,34 @@ function renderCat(catData) {
   Notiflix.Loading.remove();
 }
 
+// function renderCat(catData) {
+//   const { url } = catData;
+//   const { description, name, temperament } = catData.breeds[0];
+//   const catContainer = document.createElement('div');
+//   catContainer.classList.add('cat-container');
+
+//   const catImage = document.createElement('img');
+//   catImage.classList.add('zoom-img');
+//   catImage.src = url;
+//   catImage.alt = name;
+//   catContainer.appendChild(catImage);
+//   const catInfoContainer = document.createElement('div');
+
+//   catInfoContainer.classList.add('cat-info-container');
+//   const catName = document.createElement('h2');
+//   catName.textContent = name;
+//   const catTemperament = document.createElement('p');
+//   catTemperament.innerHTML = `<strong>Temperament:</strong> ${temperament}`;
+//   const catDescription = document.createElement('p');
+//   catDescription.textContent = description;
+//   catInfoContainer.appendChild(catName);
+//   catInfoContainer.appendChild(catDescription);
+//   catInfoContainer.appendChild(catTemperament);
+//   catContainer.appendChild(catInfoContainer);
+//   catInfo.appendChild(catContainer);
+//   loader.classList.add('hidden');
+//   Notiflix.Loading.remove();
+// }
 //   fetchCatByBreed(e.target.value).then(data => renderCat(data[0]));
 
 // function renderCat(catData) {

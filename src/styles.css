@@ -135,3 +135,15 @@ img {
   height: auto;
   border: 3mm ridge #6b5b49;
 }
+
+.zoom-img {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.zoom-img:hover,
+.zoom-img:focus {
+  transform: scale(1.7);
+  cursor: grab;
+}
